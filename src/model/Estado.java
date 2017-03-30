@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 public class Estado {
-	private int round, numUnitsAly, numUnitsEnemy;
+	private int round, numUnitsAly, numUnitsEnemy, qtdUnitsPerArmy;
 	private BigDecimal LTD2, tempoEx;
 	private String TipoAlgoritm;
 	private ArrayList<Unit> unidades;
@@ -14,6 +14,7 @@ public class Estado {
 	public Estado(){
 		unidades = new ArrayList<>();
 		actions = new ArrayList<>();
+		qtdUnitsPerArmy = 50;
 	}
 	
 	public String encodeEstado(){
@@ -31,6 +32,58 @@ public class Estado {
 			return retorno = "";
 		}
 		return retorno;
+	}
+	
+	public String encodeFullEstado(){
+		String retorno = "";
+		try{
+		//retorno += Integer.toString(round).concat(";");
+		retorno += Integer.toString(numUnitsAly).concat(";");
+		retorno += Integer.toString(numUnitsEnemy).concat(";");
+		//organiza os dados das unidades do player 0
+		ArrayList<Unit> unitsTemp = obterUnitsPlay0();
+		for (Unit unit : unitsTemp) {
+			retorno += unit.getString().concat(";");
+		}
+		for (int i = 0; i < ( qtdUnitsPerArmy - unitsTemp.size()); i++) {
+			retorno += Unit.getBlankUnit(0);			
+		}
+		
+		//organiza os dados das unidades do player 1
+		unitsTemp = obterUnitsPlay1();
+		for (Unit unit : unitsTemp) {
+			retorno += unit.getString().concat(";");
+		}
+		for (int i = 0; i < ( qtdUnitsPerArmy - unitsTemp.size()); i++) {
+			retorno += Unit.getBlankUnit(1);			
+		}
+		
+		
+		retorno += LTD2.toString();
+		}catch (Exception e) {
+			return retorno = "";
+		}
+		return retorno;
+	}
+	
+	public ArrayList<Unit> obterUnitsPlay0(){
+		ArrayList<Unit> unitP0 = new ArrayList<>();
+		for (Unit unit : this.unidades) {
+			if(unit.getIdPlayer()==0){
+				unitP0.add(unit);
+			}
+		}
+		return unitP0;
+	}
+	
+	public ArrayList<Unit> obterUnitsPlay1(){
+		ArrayList<Unit> unitP1 = new ArrayList<>();
+		for (Unit unit : this.unidades) {
+			if(unit.getIdPlayer()==1){
+				unitP1.add(unit);
+			}
+		}
+		return unitP1;
 	}
 	
 	public int totalUnidades(){

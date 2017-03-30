@@ -94,6 +94,26 @@ public class ProcessadorArquivos {
 		}
 		
 	}
+	
+	public void gravarEstadoCompleto(String linha, String caminho){
+		FileWriter arq;
+		try {
+			arq = new FileWriter(caminho.concat("/datasetFull"), true);
+			PrintWriter gravarArq = new PrintWriter(arq);
+			
+			gravarArq.println(linha);
+			
+			gravarArq.flush();
+			gravarArq.close();
+			arq.close();
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
 
 

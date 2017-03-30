@@ -62,6 +62,15 @@ public class Unit implements Comparable<Unit> {
 	}
 	
 	
+	public static String getBlankUnit(int idPlayer){
+		String retorno = "";
+		
+		retorno += "P"+Integer.toString(idPlayer).concat(";") + "-".concat(";") + "-1".concat(";");
+		retorno = retorno.concat("-1").concat(";").concat("-1");
+		retorno +=";";
+		return retorno;
+	}
+	
 	public void leDadosUnidade(String dados){
 		//System.out.println(dados);
 		String[] split = dados.trim().split(" ");
